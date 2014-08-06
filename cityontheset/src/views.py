@@ -20,12 +20,20 @@ class MoviesList(generics.ListAPIView):
         movies = Movies.objects.all()
         id = request.QUERY_PARAMS.get('id', None)
         name = request.QUERY_PARAMS.get('name', None)
+        sort = request.QUERY_PARAMS.get('sort', None)
+        limit = request.QUERY_PARAMS.get('limit', None)
 
         if(id):
             movies = movies.filter(id=id)
 
         if(name):
-            movies = movies.filter(name__icontains=name).order_by('-release_year')
+            movies = movies.filter(name__icontains=name)
+
+        if(sort):
+            movies = movies.order_by(sort)
+
+        if(limit):
+            movies = movies[:limit]
 
         serializer = MoviesSerializer(movies, many=True)
         return Response(serializer.data)

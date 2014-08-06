@@ -23,7 +23,6 @@
     margin: 0px;
     padding: 0px
     }
-    /* Gradient color1 - color2 - color1 */
 
     hr.style-one {
     border: 0;
@@ -131,9 +130,12 @@
                   url: "/cityontheset/api/movies/?",
                   dataType: "json",
                   data: {
-                    name: request.term
+                    name: request.term,
+                    sort: '-release_year',
+                    limit: 10
                   },
                   success: function( data ) {
+                    movie_id = -1;
                     response (data);
                   }
                 });
@@ -160,6 +162,16 @@
            $(function() {
            $( "#searchBtn" ).click( function() {
                 $("#info-wrapper").hide();
+                if($("#searchFilm").val() == null || $("#searchFilm").val() == "") {
+                    $("#navbar-alerts").text("Please enter a film name to search");
+                    while(markers.length > 0){
+                      tmp = markers.pop();
+                      tmp.setMap(null);
+                    }
+                    return false;
+                }
+                $("#navbar-alerts").text("");
+
                 $.ajax({
                   url: "/cityontheset/api/cityfilmlocs/?",
                   dataType: "json",
@@ -171,9 +183,8 @@
                       tmp = markers.pop();
                       tmp.setMap(null);
                     }
-
-                    if(data.length == 1 && !data[0]['location_id']) {
-                        alert("Location information is not available for this movie");
+                    if(data.length == 0) {
+                        $("#navbar-alerts").text("No locations found for this movie");
                     }
                     else {
                     var bounds = new google.maps.LatLngBounds ();
@@ -256,10 +267,22 @@
             <span class="glyphicon glyphicon-search"></span>
         </button>
     </form>
+    <h4 class="navbar-text">
+        <span id="navbar-alerts" class="label label-info"></span>
+    </h4>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" style="padding-right:25px">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="mailto:cityontheset@gmail.com">Email City on the Set!</a></li>
+          </ul>
+        </li>
+      </ul>
 </div>
 <div id="welcomeAlert" class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
-            class="sr-only">Close</span></button>
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span></button>
     <strong>Welcome to City on the Set!</strong><br>
     Use the search box above to choose a film.<br>
     Click on the pins to find out more information on the filming locations.
