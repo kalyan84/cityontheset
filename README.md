@@ -12,6 +12,7 @@ Strategy:
 ---------
 
 In my mind, there were three key pieces of the application that needed to be thought about at a high level.
+
 1. Accessing the filming locations data from the SF Data source
 2. Geocoding the locations so that it can be shown on the map
 3. Provide an autocomplete capability for searching the list of movies
