@@ -7,7 +7,7 @@ if PROJECT_ROOT not in sys.path:
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cityontheset.settings")
 
-from cityontheset.src.models import Movies,Locations,Persons,Companies,CityFilmLocs
+from cityontheset.src.models import Movie,Location,Person,Company,CityFilmLoc
 import urllib2, json, re
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
@@ -61,23 +61,23 @@ def processData():
 
                 if elem.get('title'):
                     try:
-                        movie = Movies.objects.get(name=elem.get('title'))
+                        movie = Movie.objects.get(name=elem.get('title'))
                     except ObjectDoesNotExist:
-                        movie = Movies(name=elem.get('title'), release_year=elem.get('release_year'))
+                        movie = Movie(name=elem.get('title'), release_year=elem.get('release_year'))
                         movie.save()
                 else:
                     raise Exception( "Required information: Title not present. Skipping element.")
 
                 if elem.get('locations'):
                     try:
-                        location = Locations.objects.get(name=elem.get('locations'))
+                        location = Location.objects.get(name=elem.get('locations'))
 
                         if not location.lat or not location.lng:
                             location.lat, location.lng = geocode(elem.get('locations'))
                             location.save()
 
                     except ObjectDoesNotExist:
-                        location = Locations(name=elem.get('locations'))
+                        location = Location(name=elem.get('locations'))
                         location.lat, location.lng = geocode(elem.get('locations'))
                         location.save()
                 else:
@@ -85,52 +85,52 @@ def processData():
 
                 if elem.get('production_company'):
                     try:
-                        production_company = Companies.objects.get(name=elem.get('production_company'))
+                        production_company = Company.objects.get(name=elem.get('production_company'))
                     except ObjectDoesNotExist:
-                        production_company = Companies(name=elem.get('production_company'))
+                        production_company = Company(name=elem.get('production_company'))
                         production_company.save()
                 if elem.get('distributor'):
                     try:
-                        distributor = Companies.objects.get(name=elem.get('distributor'))
+                        distributor = Company.objects.get(name=elem.get('distributor'))
                     except ObjectDoesNotExist:
-                        distributor = Companies(name=elem.get('distributor'))
+                        distributor = Company(name=elem.get('distributor'))
                         distributor.save()
                 if elem.get('writer'):
                     try:
-                        writer = Persons.objects.get(name=elem.get('writer'))
+                        writer = Person.objects.get(name=elem.get('writer'))
                     except ObjectDoesNotExist:
-                        writer = Persons(name=elem.get('writer'))
+                        writer = Person(name=elem.get('writer'))
                         writer.save()
                 if elem.get('director'):
                     try:
-                        director = Persons.objects.get(name=elem.get('director'))
+                        director = Person.objects.get(name=elem.get('director'))
                     except ObjectDoesNotExist:
-                        director = Persons(name=elem.get('director'))
+                        director = Person(name=elem.get('director'))
                         director.save()
                 if elem.get('actor_1'):
                     try:
-                        actor_1 = Persons.objects.get(name=elem.get('actor_1'))
+                        actor_1 = Person.objects.get(name=elem.get('actor_1'))
                     except ObjectDoesNotExist:
-                        actor_1 = Persons(name=elem.get('actor_1'))
+                        actor_1 = Person(name=elem.get('actor_1'))
                         actor_1.save()
                 if elem.get('actor_2'):
                     try:
-                        actor_2 = Persons.objects.get(name=elem.get('actor_2'))
+                        actor_2 = Person.objects.get(name=elem.get('actor_2'))
                     except ObjectDoesNotExist:
-                        actor_2 = Persons(name=elem.get('actor_2'))
+                        actor_2 = Person(name=elem.get('actor_2'))
                         actor_2.save()
                 if elem.get('actor_3'):
                     try:
-                        actor_3 = Persons.objects.get(name=elem.get('actor_3'))
+                        actor_3 = Person.objects.get(name=elem.get('actor_3'))
                     except ObjectDoesNotExist:
-                        actor_3 = Persons(name=elem.get('actor_3'))
+                        actor_3 = Person(name=elem.get('actor_3'))
                         actor_3.save()
                 fun_facts = elem.get('fun_facts')
 
                 try:
-                    city_film_loc = CityFilmLocs.objects.get(movie_id=movie, location_id=location)
+                    city_film_loc = CityFilmLoc.objects.get(movie_id=movie, location_id=location)
                 except ObjectDoesNotExist:
-                    city_film_loc = CityFilmLocs(movie_id=movie, location_id=location, fun_facts=fun_facts, production_company_id=production_company, distributor_id=distributor, director_id=director, writer_id=writer, actor_1_id=actor_1, actor_2_id=actor_2, actor_3_id=actor_3)
+                    city_film_loc = CityFilmLoc(movie_id=movie, location_id=location, fun_facts=fun_facts, production_company_id=production_company, distributor_id=distributor, director_id=director, writer_id=writer, actor_1_id=actor_1, actor_2_id=actor_2, actor_3_id=actor_3)
                     city_film_loc.save()
         except Exception as e:
             print e

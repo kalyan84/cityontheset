@@ -2,31 +2,31 @@ __author__ = 'kalyang'
 
 from rest_framework import serializers
 
-from models import Movies, Locations, Persons, Companies, CityFilmLocs
+from models import Movie, Location, Person, Company, CityFilmLoc
 
 
-class MoviesSerializer(serializers.HyperlinkedModelSerializer):
+class MovieSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Movies
+        model = Movie
         fields = ('id', 'name', 'release_year')
 
-class LocationsSerializer(serializers.HyperlinkedModelSerializer):
+class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Locations
+        model = Location
         fields = ('id', 'name', 'lat', 'lng')
 
-class PersonsSerializer(serializers.HyperlinkedModelSerializer):
+class PersonSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Persons
+        model = Person
         fields = ('id', 'name')
 
-class CompaniesSerializer(serializers.HyperlinkedModelSerializer):
+class CompanySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Companies
+        model = Company
         fields = ('id', 'name')
 
-class CityFilmLocsSerializer(serializers.HyperlinkedModelSerializer):
+class CityFilmLocSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = CityFilmLocs
+        model = CityFilmLoc
         depth = 1
         fields = ('id', 'movie_id','location_id','fun_facts','production_company_id','distributor_id','director_id','writer_id','actor_1_id','actor_2_id','actor_3_id')

@@ -1,14 +1,13 @@
 #!/usr/bin/python
 import unittest
 import sys
-import testsuite_api_movies, testsuite_api_film_locs, testsuite_dump_data
+import test_movies, test_film_locs
 
 def main():
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
-    suite.addTests(loader.loadTestsFromModule(testsuite_api_movies))
-    suite.addTests(loader.loadTestsFromModule(testsuite_api_film_locs))
-    suite.addTests(loader.loadTestsFromModule(testsuite_dump_data))
+    suite.addTests(loader.loadTestsFromModule(test_movies))
+    suite.addTests(loader.loadTestsFromModule(test_film_locs))
     return unittest.TextTestRunner(verbosity=2).run(suite)
 
 if __name__ == '__main__':
