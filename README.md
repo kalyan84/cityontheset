@@ -99,7 +99,9 @@ Prior to this project, I had not dealt with the Google APIs. But, kudos to good 
 
 Twitter Bootstrap:
 I used a free Bootstrap template from Bootswatch to style the application. Given my limited experience with defining custom CSS, I also used the following additional online resources:
+  
   http://css-tricks.com/simple-styles-for-horizontal-rules/
+  
   https://gist.github.com/daz/2168334
 
 Heroku:
