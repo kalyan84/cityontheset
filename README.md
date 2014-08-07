@@ -1,7 +1,7 @@
 City on the Set!
 ============
 
-City on the Set! is a web application which shows the locations in San Francisco that are featured in films, and also, any trivia associated with the location.
+City on the Set! is a web application which shows the locations in San Francisco that are featured in films. The individual locations also provide any trivia associated with the movie at this location.
 
 Application URL: http://cityontheset.herokuapp.com/
 
